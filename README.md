@@ -1,54 +1,85 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YouTube to MP3 Converter</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ytconverter.github.io/converter.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
+            background-color: #f2f2f2;
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
+            max-width: 500px;
+            margin: 0 auto;
             padding: 20px;
             background-color: #fff;
-            border-radius: 10px;
+            border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
             color: #333;
         }
-        p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 20px;
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .converter-link {
+        button {
             display: block;
             width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .download-link {
+            margin-top: 20px;
             text-align: center;
-            padding: 10px 0;
-            background-color: #007bff;
+        }
+        .download-link a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
         }
-        .converter-link:hover {
-            background-color: #0056b3;
+        .download-link a:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>YouTube to MP3 Converter</h1>
-        <p>คุณสามารถแปลงวิดีโอจาก YouTube เป็น MP3 และดาวน์โหลดไปยังมือถือของคุณได้ด้วยลิงก์ด้านล่าง:</p>
-        <a class="converter-link" href="https://www.ytmp3.cc/" target="_blank">YouTube to MP3 Converter</a>
+        <input type="text" id="youtubeLink" placeholder="Enter YouTube link">
+        <button onclick="convertToMP3()">Convert to MP3</button>
+        <div class="download-link" id="downloadLink"></div>
     </div>
+
+    <script>
+        function convertToMP3() {
+            var youtubeLink = document.getElementById("youtubeLink").value;
+            YTConverter.getMP3(youtubeLink, function(err, mp3Link) {
+                if (err) {
+                    console.error("Error:", err);
+                } else {
+                    var downloadLink = '<a href="' + mp3Link + '" download>Download MP3</a>';
+                    document.getElementById("downloadLink").innerHTML = downloadLink;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
